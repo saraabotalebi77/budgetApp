@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+    <title>BUDGET APP</title>
+    <!-- Linking Roboto font  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Linking font Awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Linking styles.css -->
+    <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
+    <!-- <link rel="stylesheet" href="./assets/css/custom/query.css" type="text/css"> -->
+</head>
+<body>
+
+    <div class="container bg-gray">
+        <header class="header">
+            <h1 class="header-name txt-transform-up fo-s-18 f-w-500" >budget app</h1>
+        </header>
+        <main class="main d-flex ">
+            <div class="budget-expense-form-wrapper mt-24">
+                <!-- budget form -->
+                <form class="budget-form mb-30">
+                    <fieldset class="budget-form_border d-flex f-dir-col f-justify-content-fStart f-align-items-fStart" >
+                        <label for="budget" class="budget-lable txt-transform-cap fo-s-14 fo-w-500">please enter your budget</label>
+                        <input type="text" class="budget-input" id="budget">
+                        <small class="validate-budget-input"></small>
+                        <button type="submit" class="budget-btn color-primary txt-transform-cap">calculate</button>
+                    </fieldset>
+                </form>
+                <!-- budget expense -->
+                <form class="expense-form">
+                    <fieldset class="expense-form_border d-flex f-dir-col f-justify-content-fStart f-align-items-fStart">
+                        <label for="name-expense" class="nameExpense-label txt-transform-cap fo-s-14 fo-w-500">please enter your expense</label>
+                        <input type="text" class="nameExpense-input" id="name-expense">
+                        <small class="validate-nameExpense"></small>
+                        
+                        <label for="expense" class="expense-label txt-transform-cap fo-s-14 fo-w-500">please enter expense amount</label>
+                        <input type="text" class="expense-input" id="expense">
+                        <small class="validate-expense-input"></small>
+                        
+                        <button type="submit" class="expense-btn color-secondary txt-transform-cap">add expense</button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="budget-expense-table-wrapper mt-24">
+                <!-- budget-table -->
+                <div class="budget-table-wrapper mb-30">
+                    <table class="budget-table mlr-auto">
+                        <thead>
+                            <tr class="txt-transform-up">
+                                <th class="fo-w-500">budget</th>
+                                <th class="fo-w-500">expenses</th>
+                                <th class="fo-w-500">balance</th>
+                            </tr>
+                            <tr class="color-tertiary">
+                                <th><i class="fa-solid fa-money-bill-1 fo-s-30 "></i></th>
+                                <th><i class="fa-solid fa-money-check fo-s-30 "></i></th>
+                                <th><i class="fa-solid fa-dollar-sign fo-s-30"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody-budget-table">
+                        </tbody>
+                    </table>
+                </div>
+                <!-- expense-table -->
+                <div class="expense-table-wrapper">
+                    <table class="expense-table mlr-auto">
+                        <thead>
+                            <tr>
+                                <th class="fo-w-500 txt-transform-cap fo-s-14">expense title</th>
+                                <th class="fo-w-500 txt-transform-cap fo-s-14">expense value</th>
+                            </tr>
+                        </thead>
+                        <tbody class="Tbody-expense-table">
+                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>

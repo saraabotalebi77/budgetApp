@@ -1,0 +1,14 @@
+@media screen and (max-width:1180px){
+    .container{
+        margin-top : 0 !important;
+    }
+}
+@media screen and (max-width:768px){
+    .main{
+        flex-direction: column;
+    }
+    .budget-expense-form-wrapper,
+    .budget-expense-table-wrapper{
+        width : 100%;
+    }
+}

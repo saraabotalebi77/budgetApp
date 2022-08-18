@@ -1,0 +1,39 @@
+.container{
+    margin-top : 3.2rem;
+    padding-left : 1.6rem;
+    padding-right : 1.6rem;
+    padding-bottom : 2rem;
+    border-radius : 0.3rem;
+}
+.budget-expense-form-wrapper{
+    width : 45%;
+}
+.budget-expense-table-wrapper{
+    width : 55%;
+}
+.budget-form_border,
+.expense-form_border{
+    position: relative;
+}
+.budget-form_border,
+.budget-input{
+    border-color : var(--primaryColor);
+}
+.expense-form_border,
+.expense-input,
+.nameExpense-input{
+    border-color : var(--secondaryColor);
+}
+.validate-expense-input,
+.validate-nameExpense,
+.validate-budget-input{
+    color : red;
+}
+.budget-table,
+.expense-table{
+    width : 90%;
+}
+.fa-pen-to-square,
+.fa-trash{
+    cursor : pointer;
+}

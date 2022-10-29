@@ -12,3 +12,8 @@
         width : 100%;
     }
 }
+@media (max-width : 578px){
+    .container{
+        min-height: 100vh;
+    }
+}

@@ -5,6 +5,9 @@
     padding-bottom : 2rem;
     border-radius : 0.3rem;
 }
+.header-name{
+    padding-top : 1rem;
+}
 .budget-expense-form-wrapper{
     width : 45%;
 }

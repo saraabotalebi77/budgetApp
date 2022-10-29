@@ -1,19 +1,23 @@
 //definition budget , expensesList variable
 let budget = !!(JSON.parse(localStorage.getItem("budget")))?
 JSON.parse(localStorage.getItem("budget")):
-{budget:0 , expensed:0 , balance:0};
-const expensesList = [];
+{budget:0 , expensed:0 , balance:0 , expensesList:[]};
+// const expensesList = [];
 // add Expense is defined for specifying add or update expense
 let addExpense = -1;
-
-render(expensesList,budget);
+//definition variable for creating element for deleting all expenses
+const btnDeleteExpensesWrapper = document.createElement("div");
+render(budget);
 
 // definition variable for getting element
-const budgetBtn = document.querySelector(".budget-btn");
+const budgetForm = document.querySelector(".budget-form");
 const expenseBtn = document.querySelector(".expense-btn");
 const budgetInput = document.querySelector(".budget-input");
 const expenseInput = document.querySelector(".expense-input");
 const nameExpenseInput = document.querySelector(".nameExpense-input");
+const budgetValidationValue = document.querySelector(".validate-budget-input");
+const expenseValidationValue = document.querySelector(".validate-expense-input");
+const nameExpenseValidationValue = document.querySelector(".validate-nameExpense");
 
 // definition variable for validating budgetInput , expenseInput , nameExpenseInput value
 let budgetValid = false;
@@ -24,14 +28,13 @@ let nameExpenseValid = false;
 // definition change event for budgetInput validation 
 budgetInput.addEventListener("keyup",(event)=>{
     const budgetValue = event.target.value;
-    const validationValue = document.querySelector(".validate-budget-input");
-    validationValue.innerHTML = null;
-    if((budgetValue.length==0) || isNaN(budgetValue) || Number(budgetValue)==0){
-        validationValue.innerHTML = "invalid value";
+    budgetValidationValue.innerHTML = null;
+    if(isNaN(budgetValue) || Number(budgetValue)<0 ){
+        budgetValidationValue.innerHTML = "invalid value";
         budgetValid = false;
     }
     else{
-        validationValue.innerHTML = null;
+        budgetValidationValue.innerHTML = null;
         budgetValid = true;
     }
 })
@@ -39,14 +42,13 @@ budgetInput.addEventListener("keyup",(event)=>{
 // definition change event for expenseInput validation 
 expenseInput.addEventListener("keyup",(event)=>{
     const expenseValue = event.target.value;
-    const validationValue = document.querySelector(".validate-expense-input");
-    validationValue.innerHTML = null;
-    if((expenseValue.length==0) || isNaN(expenseValue) || Number(expenseValue)==0){
-        validationValue.innerHTML = "invalid value";
+    expenseValidationValue.innerHTML = null;
+    if(isNaN(expenseValue)){
+        expenseValidationValue.innerHTML = "invalid value";
         expenseValid = false;
     }
     else{
-        validationValue.innerHTML = null;
+        expenseValidationValue.innerHTML = null;
         expenseValid = true;
 
     }
@@ -54,14 +56,13 @@ expenseInput.addEventListener("keyup",(event)=>{
 // definition change event for nameExpenseInput validation 
 nameExpenseInput.addEventListener("keyup",(event)=>{
     const expenseName = event.target.value;
-    const validationValue = document.querySelector(".validate-nameExpense");
-    validationValue.innerHTML = null;
-    if((expenseName.length==0)){
-        validationValue.innerHTML = "invalid value";
+    nameExpenseValidationValue.innerHTML = null;
+    if((expenseName.length==0 || isFinite(expenseName))){
+        nameExpenseValidationValue.innerHTML = "invalid value";
         nameExpenseValid = false;
     }
     else{
-        validationValue.innerHTML = null;
+        nameExpenseValidationValue.innerHTML = null;
         nameExpenseValid = true;
     }
 })
@@ -69,36 +70,45 @@ nameExpenseInput.addEventListener("keyup",(event)=>{
 // definition editExpense 
 const editExpense = function(index){
     // transform expense & nameExpense to expenseInput and  nameExpenseInpu
-    expenseInput.value = expensesList[index].amount;
-    nameExpenseInput.value = expensesList[index].name;
+    expenseInput.value = budget.expensesList[index].amount;
+    nameExpenseInput.value = budget.expensesList[index].name;
     // deleteing and adding expense amount from budget 
-    budget.balance += expensesList[index].amount;
-    budget.expensed -= expensesList[index].amount;
+    budget.balance += budget.expensesList[index].amount;
+    budget.expensed -= budget.expensesList[index].amount;
     // updating name expenseBtn 
     expenseBtn.innerHTML = "update expense";
     //changing addExpense value for specifying to update expense
     addExpense = index;
-    render(expensesList,budget);
+    render(budget);
 }
 
 // definition deleteExpense
 const deleteExpense = function(index){
     // deleteing and adding expense amount from budget 
-    budget.balance += expensesList[index].amount;
-    budget.expensed -= expensesList[index].amount;
+    budget.balance += budget.expensesList[index].amount;
+    budget.expensed -= budget.expensesList[index].amount;
     //deleteing expense from expenseList 
-    expensesList.splice(1,index);
-    render(expensesList,budget)
+    budget.expensesList.splice(index,1);
+    render(budget)
+}
+// definition deleteAllExpense
+const deleteAllExpense = function(){
+    //deleting all expenses from expensesList 
+    budget.expensesList = [];
+    render(budget)
 }
 
-function render(expensesList,budget){
+
+
+function render(budget){
     // definition variable for getting Tbody-expense-table element in html and inserting epnenses in expense-table
     const TbodyExpenseTable = document.querySelector('.Tbody-expense-table');
+    
     TbodyExpenseTable.innerHTML = null;
-    expensesList.forEach((expense,index)=>{
+    budget.expensesList.forEach((expense,index)=>{
         const trTbodyExpenseTable = document.createElement("tr");
         trTbodyExpenseTable.innerHTML = `
-        <td class="color-secondary fo-s-14 fo-w-500 txt-transform-up">-${expense.name}</td>
+        <td class="color-secondary fo-s-14 fo-w-500 txt-transform-up ">${expense.name}</td>
         <td class="color-secondary fo-s-14 fo-w-500">&#65284 ${expense.amount}</td>
         <td >
             <i class="fa-solid fa-pen-to-square color-tertiary"onclick="editExpense(${index})" ></i>
@@ -106,6 +116,20 @@ function render(expensesList,budget){
         </td>`;
         TbodyExpenseTable.append(trTbodyExpenseTable);
     })
+
+    if(budget.expensesList.length!=0){
+        
+        btnDeleteExpensesWrapper.innerHTML = null;
+        btnDeleteExpensesWrapper.innerHTML = `
+        <div class="btn-delete-expenses-wrapper mlr-auto">
+            <button class="expense-btn color-secondary txt-transform-cap w-100" onclick="deleteAllExpense()">Delete Expenses</button>
+        </div>`;
+        const expenseTableWrapper = document.querySelector(".expense-table-wrapper");
+        expenseTableWrapper.append(btnDeleteExpensesWrapper);
+    }
+    else{
+        btnDeleteExpensesWrapper.innerHTML = null;
+    }
 
     // definition variable for getting Tbody-budget-table element in html and inserting budget in budget-table
     const TbodyBudgetTable = document.querySelector(".tbody-budget-table");
@@ -120,14 +144,17 @@ function render(expensesList,budget){
 }
 
 // definition click event for budget-button
-budgetBtn.addEventListener("click",(event)=>{
+budgetForm.addEventListener("submit",(event)=>{
     event.preventDefault();
     //  update budget object if entered value is valid 
     if(budgetValid){
         budget.budget = budget.balance  = +(budgetInput.value);
         budget.expensed = 0 ;
         budgetInput.value = null;
-        render(expensesList,budget);
+        render(budget);
+    }
+    else{
+        budgetValidationValue.innerHTML = "invalid value";
     }
 });
 
@@ -149,13 +176,21 @@ expenseBtn.addEventListener("click",(event)=>{
         expenseInput.value = null;
         // add expense to expenseList if addExpense value is -1 otherwise update expenseList 
         if(addExpense == -1){
-            expensesList.push(newExpense);
+            budget.expensesList.push(newExpense);
         }
         else{
-            expensesList.splice(addExpense,1,newExpense);
+            budget.expensesList.splice(addExpense,1,newExpense);
             expenseBtn.innerHTML = "add expense";
         }
-        render(expensesList,budget);
+        render(budget);
+    }
+    else{
+        if(!expenseValid){
+            expenseValidationValue.innerHTML= "invalid value";
+        }
+        if(!nameExpenseValid){
+            nameExpenseValidationValue.innerHTML= "invalid value";
+        }
     }
   
 });

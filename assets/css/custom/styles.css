@@ -33,7 +33,8 @@
     color : red;
 }
 .budget-table,
-.expense-table{
+.expense-table,
+.btn-delete-expenses-wrapper{
     width : 90%;
 }
 .fa-pen-to-square,
